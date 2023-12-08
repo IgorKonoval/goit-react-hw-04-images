@@ -23,7 +23,7 @@ export class SearchBar extends Component {
   handleChange = evt => {
     this.setState({ input: evt.target.value });
   };
-
+  
   render() {
     return (
       <SearchBarHeader>
