@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { FcSearch } from 'react-icons/fc';
 import {
   SearchBarHeader,
@@ -7,39 +7,33 @@ import {
   SearchButton,
 } from './Searchbar.styled';
 
-export class SearchBar extends Component {
-  state = {
-    searchItem: '',
-    input: '',
-  };
+export const SearchBar = ({ onSubmit }) => {
+  const [input, setInput] = useState('');
 
-  handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
-    const searchQuery = evt.target.elements.searchItem.value.trim();
-    this.props.onSubmit(searchQuery);
+    onSubmit(evt.target.elements.searchItem.value.trim());
     evt.target.reset();
   };
 
-  handleChange = evt => {
-    this.setState({ input: evt.target.value });
+  const handleChange = evt => {
+    setInput(evt.target.value);
   };
 
-  render() {
-    return (
-      <SearchBarHeader>
-        <SearchForm onSubmit={this.handleSubmit}>
-          <SearchButton>
-            <FcSearch size="30px" />
-          </SearchButton>
-          <SearchInput
-            name="searchItem"
-            type="text"
-            id="search"
-            value={this.state.input}
-            onChange={this.handleChange}
-          />
-        </SearchForm>
-      </SearchBarHeader>
-    );
-  }
-}
+  return (
+    <SearchBarHeader>
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchButton>
+          <FcSearch size="30px" />
+        </SearchButton>
+        <SearchInput
+          name="searchItem"
+          type="text"
+          id="search"
+          value={input}
+          onChange={handleChange}
+        />
+      </SearchForm>
+    </SearchBarHeader>
+  );
+};
